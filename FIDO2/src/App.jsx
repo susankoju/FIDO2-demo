@@ -47,7 +47,6 @@ function App() {
 
       const authenticationResponse = await startAuthentication({
         optionsJSON: options,
-        useAutoRegister: false,
       });
       console.log({ authenticationResponse });
 
