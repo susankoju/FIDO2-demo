@@ -33,7 +33,7 @@ app.post('/registration-initiate', async (req, res) => {
         return res.status(400).json({ error: 'Username is required!' });
     }
 
-    const user = {
+    const user = userDB.get(username) || {
         username,
         id: uuidv4(),
         credentials: []
