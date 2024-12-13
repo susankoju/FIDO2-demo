@@ -52,6 +52,7 @@ app.post('/registration-initiate', async (req, res) => {
 
     user.pendingChallenge = options.challenge;
     userDB.set(username, user);
+    console.log(userDB)
 
     res.json(options);
 });
@@ -75,7 +76,9 @@ app.post('/registration-complete', async (req, res) => {
 
         if (verification.verified) {
             user.credentials.push(verification.registrationInfo.credential);
+            delete user.pendingChallenge
             userDB.set(username, user);
+            console.log(userDB)
             res.json({ success: true })
         } else {
             res.status(400).json({ error: 'Verification failed' })
@@ -109,6 +112,7 @@ app.post('/login-initiate', async (req, res) => {
 
     user.pendingChallenge = options.challenge;
     userDB.set(username, user);
+    console.log(userDB)
 
     res.json(options);
 });
@@ -138,8 +142,9 @@ app.post('/login-complete', async (req, res) => {
         });
 
         if (verification.verified) {
-            user.credentials.push(verification.registrationInfo);
+            delete user.pendingChallenge;
             userDB.set(username, user);
+            console.log(userDB)
             res.json({ success: true })
         } else {
             res.status(400).json({ error: 'Verification failed' })
